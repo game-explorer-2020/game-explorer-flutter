@@ -17,4 +17,10 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: fonts/Nunito-Regular.ttf
+        - asset: fonts/Nunito-Bold.ttf
+          weight: 700
   uses-material-design: true
