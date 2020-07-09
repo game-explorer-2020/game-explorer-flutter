@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:game_explorer_flutter/layout/color_definitions.dart';
 import 'package:game_explorer_flutter/screens/explore/explore.dart';
 import 'package:game_explorer_flutter/screens/news_list/news_list.dart';
 
