@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:game_explorer_flutter/layout/color_definitions.dart';
+import 'package:game_explorer_flutter/screens/explore/explore.dart';
+import 'package:game_explorer_flutter/screens/news_list/news_list.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Game Explorer'),
-      ),
-      body: Center(
-        child: Text('Hello World'),
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'FEED'),
+              Tab(text: 'EXPLORE'),
+            ],
+          ),
+          title: Text('Game Explorer'),
+        ),
+        body: TabBarView(
+          children: [
+            NewsList(),
+            Explore(),
+          ],
+        ),
       ),
     );
   }
