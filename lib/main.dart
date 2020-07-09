@@ -55,7 +55,7 @@ class GameExplorer extends StatelessWidget {
           bodyText2: TextStyle(color: ColorDefinitions.light()),
         ),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: Home(),
     );
   }
