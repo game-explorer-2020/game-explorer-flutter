@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:game_explorer_flutter/models/layout/carousel_card.dart';
 
 class HorizontalCarousel extends StatelessWidget {
-  HorizontalCarousel({
-    Key key,
-    @required this.title,
-  }) : super(key: key);
-
   final String title;
-  final String _imageUrl = 'https://media.contentapi.ea.com/content/dam/bf/images/bfcom-migration/battlefield-1.jpg.adapt.crop191x100.1200w.jpg';
+  final List<CarouselCard> cards;
+  final Function onSeeAllClick;
+
+  HorizontalCarousel({
+    @required this.title,
+    @required this.cards,
+    @required this.onSeeAllClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +46,7 @@ class HorizontalCarousel extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.all(10.0),
             children: [
-              _ListItem(imageUrl: this._imageUrl),
-              _ListItem(imageUrl: this._imageUrl),
-              _ListItem(imageUrl: this._imageUrl),
+              for (var card in cards) _ListItem(card: card),
             ],
           ),
         ),
@@ -55,19 +56,17 @@ class HorizontalCarousel extends StatelessWidget {
 }
 
 class _ListItem extends StatelessWidget {
-  _ListItem({
-    Key key,
-    @required this.imageUrl,
-  }) : super(key: key);
+  final CarouselCard card;
 
-  final String imageUrl;
+  _ListItem({@required this.card});
 
   @override
   Widget build(BuildContext context) {
+    print(card.imageUrl);
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Image.network(
-        imageUrl,
+        this.card.imageUrl,
         width: 100,
         height: 100,
         fit: BoxFit.cover,
