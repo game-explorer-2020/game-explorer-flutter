@@ -15,23 +15,28 @@ class FeedItem extends StatelessWidget {
       children: <Widget>[
         GestureDetector(
           onTap: () => _pushArticleWebView(context),
-          child: Card(
-            clipBehavior: Clip.antiAliasWithSaveLayer,
-            child: Image.network(
-              this.feed.imageUrl,
-              height: 132,
-              fit: BoxFit.fitWidth,
-            ),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-            margin: EdgeInsets.zero,
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 10.0),
-          child: Text(
-            this.feed.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: Image.network(
+                  this.feed.imageUrl,
+                  height: 132,
+                  fit: BoxFit.fitWidth,
+                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                margin: EdgeInsets.zero,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                child: Text(
+                  this.feed.title,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
           ),
         ),
         Row(
