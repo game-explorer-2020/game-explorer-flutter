@@ -12,7 +12,7 @@ class GameExplorer extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Nunito',
         primaryColor: ColorDefinitions.light(),
-        indicatorColor: ColorDefinitions.dark(),
+        indicatorColor: ColorDefinitions.darker(),
         accentColor: ColorDefinitions.accent(),
         scaffoldBackgroundColor: ColorDefinitions.light(),
         appBarTheme: AppBarTheme(
@@ -20,7 +20,7 @@ class GameExplorer extends StatelessWidget {
           elevation: 0.0,
           textTheme: TextTheme(
             headline6: TextStyle(
-              color: ColorDefinitions.dark(),
+              color: ColorDefinitions.darker(),
               fontSize: 20.0,
               fontWeight: FontWeight.bold,
               fontFamily: 'Nunito',
@@ -28,18 +28,18 @@ class GameExplorer extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
-          headline6: TextStyle(color: ColorDefinitions.dark()),
-          bodyText2: TextStyle(color: ColorDefinitions.dark()),
+          headline6: TextStyle(color: ColorDefinitions.dark(0.5)),
+          bodyText2: TextStyle(color: ColorDefinitions.darker()),
         ),
       ),
       darkTheme: ThemeData(
         fontFamily: 'Nunito',
-        primaryColor: ColorDefinitions.dark(),
+        primaryColor: ColorDefinitions.darker(),
         indicatorColor: ColorDefinitions.light(),
         accentColor: ColorDefinitions.accent(),
-        scaffoldBackgroundColor: ColorDefinitions.dark(),
+        scaffoldBackgroundColor: ColorDefinitions.darker(),
         appBarTheme: AppBarTheme(
-          color: ColorDefinitions.dark(),
+          color: ColorDefinitions.darker(),
           elevation: 0.0,
           textTheme: TextTheme(
             headline6: TextStyle(
@@ -51,7 +51,7 @@ class GameExplorer extends StatelessWidget {
           ),
         ),
         textTheme: TextTheme(
-          headline6: TextStyle(color: ColorDefinitions.light()),
+          headline6: TextStyle(color: ColorDefinitions.dark()),
           bodyText2: TextStyle(color: ColorDefinitions.light()),
         ),
       ),

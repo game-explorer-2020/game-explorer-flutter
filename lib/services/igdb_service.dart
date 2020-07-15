@@ -19,8 +19,8 @@ class IgdbService {
     return GameDetails.fromJson(json.decode(response.body));
   }
 
-  static Future<List<Feed>> fetchFeeds() async {
-    final response = await http.get("$baseUrl/feeds");
+  static Future<List<Feed>> fetchFeeds(int offset) async {
+    final response = await http.get("$baseUrl/feeds?offset=$offset");
     final Iterable feeds = json.decode(response.body);
 
     return feeds.map((feed) => Feed.fromJson(feed)).toList();

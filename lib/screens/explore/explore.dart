@@ -41,7 +41,9 @@ class _ExploreState extends State<Explore> {
               ),
             ],
           );
-        } else if (snapshot.hasError) {
+        }
+
+        if (snapshot.hasError) {
           return Center(child: Text("Oops... There was an error."));
         }
 

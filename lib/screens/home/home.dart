@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/screens/explore/explore.dart';
-import 'package:game_explorer_flutter/screens/news_list/news_list.dart';
+import 'package:game_explorer_flutter/screens/feeds/feed.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            NewsList(),
+            Feeds(),
             Explore(),
           ],
         ),
