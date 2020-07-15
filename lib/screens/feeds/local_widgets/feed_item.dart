@@ -3,10 +3,17 @@ import 'package:game_explorer_flutter/models/feed.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class FeedItem extends StatelessWidget {
+class FeedItem extends StatefulWidget {
   final Feed feed;
 
-  FeedItem({@required this.feed});
+  FeedItem({Key key, @required this.feed}) : super(key: key);
+
+  @override
+  _FeedItemState createState() => _FeedItemState();
+}
+
+class _FeedItemState extends State<FeedItem> {
+  bool _favoriteToggled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,7 @@ class FeedItem extends StatelessWidget {
               Card(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
                 child: Image.network(
-                  this.feed.imageUrl,
+                  widget.feed.imageUrl,
                   height: 132,
                   fit: BoxFit.fitWidth,
                 ),
@@ -31,7 +38,7 @@ class FeedItem extends StatelessWidget {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 child: Text(
-                  this.feed.title,
+                  widget.feed.title,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -42,11 +49,14 @@ class FeedItem extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            Icon(
-              Icons.favorite,
-              color: Theme.of(context).accentColor,
+            GestureDetector(
+              child: Icon(
+                _favoriteToggled ? Icons.favorite : Icons.favorite_border,
+                color: Theme.of(context).accentColor,
+              ),
+              onTap: () => setState(() => _favoriteToggled = !_favoriteToggled),
             ),
-            Text(timeago.format(this.feed.publishedAt), style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
+            Text(timeago.format(widget.feed.publishedAt), style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
           ],
         )
       ],
@@ -59,10 +69,10 @@ class FeedItem extends StatelessWidget {
         builder: (BuildContext context) {
           return Scaffold(
             appBar: AppBar(
-              title: Text(feed.title),
+              title: Text(widget.feed.title),
             ),
             body: WebView(
-              initialUrl: feed.url,
+              initialUrl: widget.feed.url,
             ),
           );
         },
