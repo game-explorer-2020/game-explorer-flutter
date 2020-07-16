@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/models/game.dart';
 import 'package:game_explorer_flutter/models/layout/carousel_card.dart';
+import 'package:game_explorer_flutter/screens/game_list/game_list.dart';
 import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:game_explorer_flutter/widgets/horizontal_carousel.dart';
 
@@ -37,7 +38,7 @@ class _ExploreState extends State<Explore> {
                       (game) => CarouselCard(imageUrl: game.coverUrl, onClick: null),
                     )
                     .toList(),
-                onSeeAllClick: null,
+                onSeeAllClick: () => _pushPopularGameList(context),
               ),
             ],
           );
@@ -49,6 +50,21 @@ class _ExploreState extends State<Explore> {
 
         return Center(child: CircularProgressIndicator());
       },
+    );
+  }
+
+  void _pushPopularGameList(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Popular games'),
+            ),
+            body: GameList(),
+          );
+        },
+      ),
     );
   }
 }

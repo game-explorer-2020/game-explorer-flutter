@@ -23,19 +23,23 @@ class HorizontalCarousel extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(title, style: TextStyle(fontSize: 18)),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(text: "SEE ALL"),
-                    WidgetSpan(
-                      child: Icon(
-                        Icons.arrow_forward,
-                        size: 18,
-                        color: Theme.of(context).indicatorColor,
+              FlatButton(
+                onPressed: onSeeAllClick,
+                splashColor: Colors.grey,
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(text: "SEE ALL"),
+                      WidgetSpan(
+                        child: Icon(
+                          Icons.arrow_forward,
+                          size: 18,
+                          color: Theme.of(context).indicatorColor,
+                        ),
                       ),
-                    ),
-                  ],
-                  style: TextStyle(color: Theme.of(context).indicatorColor),
+                    ],
+                    style: TextStyle(color: Theme.of(context).indicatorColor),
+                  ),
                 ),
               ),
             ],
@@ -45,7 +49,7 @@ class HorizontalCarousel extends StatelessWidget {
           height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(5.0),
             children: [
               for (var card in cards) _ListItem(card: card),
             ],
