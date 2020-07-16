@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/models/layout/carousel_card.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class HorizontalCarousel extends StatelessWidget {
   final String title;
@@ -65,8 +66,9 @@ class _ListItem extends StatelessWidget {
     print(card.imageUrl);
     return Card(
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: Image.network(
-        this.card.imageUrl,
+      child: FadeInImage.memoryNetwork(
+        image: this.card.imageUrl,
+        placeholder: kTransparentImage,
         width: 100,
         height: 100,
         fit: BoxFit.cover,

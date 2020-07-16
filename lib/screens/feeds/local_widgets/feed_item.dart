@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/models/feed.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:transparent_image/transparent_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FeedItem extends StatefulWidget {
@@ -27,8 +28,9 @@ class _FeedItemState extends State<FeedItem> {
             children: <Widget>[
               Card(
                 clipBehavior: Clip.antiAliasWithSaveLayer,
-                child: Image.network(
-                  widget.feed.imageUrl,
+                child: FadeInImage.memoryNetwork(
+                  image: widget.feed.imageUrl,
+                  placeholder: kTransparentImage,
                   height: 132,
                   fit: BoxFit.fitWidth,
                 ),
