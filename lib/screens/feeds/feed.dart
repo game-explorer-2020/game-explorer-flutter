@@ -37,12 +37,15 @@ class _FeedsState extends State<Feeds> {
               child: ListView.builder(
                 controller: _controller,
                 itemBuilder: (context, index) {
+                  if (index == _feeds.length) {
+                    return Center(child: Padding(padding: EdgeInsets.all(15.0), child: CircularProgressIndicator()));
+                  }
                   return Container(
                     margin: EdgeInsets.all(20.0),
                     child: FeedItem(feed: _feeds[index]),
                   );
                 },
-                itemCount: _feeds.length,
+                itemCount: _feeds.length + 1,
               ),
               onRefresh: _refresh,
             ),
@@ -57,7 +60,9 @@ class _FeedsState extends State<Feeds> {
 
   void _updateFeeds() {
     IgdbService.fetchFeeds(_currentPage).then((response) {
-      setState(() => _feeds.addAll(response));
+      setState(() {
+        _feeds.addAll(response);
+      });
       _currentPage++;
     });
   }
