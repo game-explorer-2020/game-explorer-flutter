@@ -15,6 +15,7 @@ class GameExplorer extends StatelessWidget {
         indicatorColor: ColorDefinitions.darker(),
         accentColor: ColorDefinitions.accent(),
         scaffoldBackgroundColor: ColorDefinitions.light(),
+        backgroundColor: ColorDefinitions.lightGray(),
         appBarTheme: AppBarTheme(
           color: ColorDefinitions.light(),
           elevation: 0.0,
@@ -30,6 +31,7 @@ class GameExplorer extends StatelessWidget {
         textTheme: TextTheme(
           headline6: TextStyle(color: ColorDefinitions.dark(0.5)),
           bodyText2: TextStyle(color: ColorDefinitions.darker()),
+          bodyText1: TextStyle(color: ColorDefinitions.dark(0.5)),
         ),
       ),
       darkTheme: ThemeData(
@@ -38,6 +40,7 @@ class GameExplorer extends StatelessWidget {
         indicatorColor: ColorDefinitions.light(),
         accentColor: ColorDefinitions.accent(),
         scaffoldBackgroundColor: ColorDefinitions.darker(),
+        backgroundColor: ColorDefinitions.dark(),
         appBarTheme: AppBarTheme(
           color: ColorDefinitions.darker(),
           elevation: 0.0,
@@ -53,6 +56,7 @@ class GameExplorer extends StatelessWidget {
         textTheme: TextTheme(
           headline6: TextStyle(color: ColorDefinitions.dark()),
           bodyText2: TextStyle(color: ColorDefinitions.light()),
+          bodyText1: TextStyle(color: ColorDefinitions.light(0.5)),
         ),
       ),
       themeMode: ThemeMode.dark,

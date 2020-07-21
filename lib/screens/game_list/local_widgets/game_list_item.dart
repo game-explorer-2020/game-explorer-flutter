@@ -57,7 +57,7 @@ class _GameListItemState extends State<GameListItem> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
                   children: [
                     TextSpan(
-                      text: widget.game.genres.join(', '),
+                      text: widget.game.genres.isEmpty ? 'None' : widget.game.genres.join(', '),
                       style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
                     ),
                   ],
@@ -72,7 +72,7 @@ class _GameListItemState extends State<GameListItem> {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
                   children: [
                     TextSpan(
-                      text: widget.game.platforms.join(', '),
+                      text: widget.game.genres.isEmpty ? 'None' : widget.game.platforms.join(', '),
                       style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
                     ),
                   ],

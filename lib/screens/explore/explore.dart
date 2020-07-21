@@ -18,7 +18,7 @@ class _ExploreState extends State<Explore> {
   @override
   void initState() {
     super.initState();
-    futureGames = IgdbService.fetchGames(0);
+    futureGames = IgdbService.fetchGames();
   }
 
   @override
