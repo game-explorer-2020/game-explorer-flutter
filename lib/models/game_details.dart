@@ -43,7 +43,7 @@ class GameDetails extends Game {
       ratingCount: json['ratingCount'] != null ? json['ratingCount'].toDouble() : null,
       aggregatedRating: json['aggregatedRating'] != null ? json['aggregatedRating'].toDouble() : null,
       aggregatedRatingCount: json['aggregatedRatingCount'] != null ? json['aggregatedRatingCount'].toDouble() : null,
-      similarGames: json['similarGames'].cast<SimilarGame>(),
+      similarGames: new List<dynamic>.from(json['similarGames']).map((e) => SimilarGame.fromJson(e)).toList(),
     );
   }
 }

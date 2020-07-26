@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/models/game.dart';
-import 'package:game_explorer_flutter/screens/game_list/local_widgets/game_list_item.dart';
+import 'package:game_explorer_flutter/widgets/game_list_item.dart';
 import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:game_explorer_flutter/utils/debouncer.dart';
 
@@ -81,7 +81,13 @@ class _GameListState extends State<GameList> {
 
                         return Container(
                           margin: EdgeInsets.all(20.0),
-                          child: GameListItem(game: _games[index]),
+                          child: GameListItem(
+                            gameId: _games[index].id,
+                            coverUrl: _games[index].coverUrl,
+                            genres: _games[index].genres,
+                            name: _games[index].name,
+                            platforms: _games[index].platforms,
+                          ),
                         );
                       },
                       itemCount: _games.length + 1,

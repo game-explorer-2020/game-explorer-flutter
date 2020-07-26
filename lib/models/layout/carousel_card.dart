@@ -1,6 +1,6 @@
 class CarouselCard {
   final String imageUrl;
-  final Function onClick;
+  final Function onTap;
 
-  CarouselCard({this.imageUrl, this.onClick});
+  CarouselCard({this.imageUrl, this.onTap});
 }
