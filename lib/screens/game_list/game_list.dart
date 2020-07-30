@@ -113,7 +113,7 @@ class _GameListState extends State<GameList> {
     if (backToFirstPage) {
       _currentPage = 0;
     }
-    IgdbService.fetchGames(offset: _currentPage, term: _searchTerm).then((games) {
+    IgdbService.fetchGames(page: _currentPage, term: _searchTerm).then((games) {
       setState(() {
         if (_currentPage == 0) {
           _games.clear();

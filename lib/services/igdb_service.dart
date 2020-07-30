@@ -7,8 +7,8 @@ import 'package:http/http.dart' as http;
 class IgdbService {
   static final String baseUrl = 'http://game-explorer-unisul.herokuapp.com/api/v1';
 
-  static Future<List<Game>> fetchGames({int offset = 0, String term = ''}) async {
-    final response = await http.get("$baseUrl/games?offset=$offset&term=$term");
+  static Future<List<Game>> fetchGames({int page = 0, String term = ''}) async {
+    final response = await http.get("$baseUrl/games?page=$page&term=$term");
     final Iterable games = json.decode(response.body);
 
     return games.map((game) => Game.fromJson(game)).toList();
@@ -19,8 +19,8 @@ class IgdbService {
     return GameDetails.fromJson(json.decode(response.body));
   }
 
-  static Future<List<Feed>> fetchFeeds(int offset) async {
-    final response = await http.get("$baseUrl/feeds?offset=$offset");
+  static Future<List<Feed>> fetchFeeds(int page) async {
+    final response = await http.get("$baseUrl/feeds?page=$page");
     final Iterable feeds = json.decode(response.body);
 
     return feeds.map((feed) => Feed.fromJson(feed)).toList();
