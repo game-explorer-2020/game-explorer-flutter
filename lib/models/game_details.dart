@@ -17,6 +17,7 @@ class GameDetails extends Game {
       coverUrl,
       genres,
       platforms,
+      favorite,
       this.releaseDate,
       this.summary,
       this.involvedCompanies,
@@ -25,7 +26,7 @@ class GameDetails extends Game {
       this.aggregatedRating,
       this.aggregatedRatingCount,
       this.similarGames})
-      : super(id: id, name: name, coverUrl: coverUrl, genres: genres, platforms: platforms);
+      : super(id: id, name: name, coverUrl: coverUrl, genres: genres, platforms: platforms, favorite: favorite);
 
   factory GameDetails.fromJson(Map<String, dynamic> json) {
     final Game game = Game.fromJson(json);
@@ -36,6 +37,7 @@ class GameDetails extends Game {
       coverUrl: game.coverUrl,
       genres: game.genres,
       platforms: game.platforms,
+      favorite: game.favorite,
       releaseDate: DateTime.fromMillisecondsSinceEpoch(json['releaseDate'] * 1000),
       summary: json['summary'],
       involvedCompanies: json['involvedCompanies'].cast<String>(),

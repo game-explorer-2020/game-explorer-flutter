@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/models/feed.dart';
+import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
@@ -14,7 +15,13 @@ class FeedItem extends StatefulWidget {
 }
 
 class _FeedItemState extends State<FeedItem> {
-  bool _favoriteToggled = false;
+  bool _favoriteToggled;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteToggled = widget.feed.favorite;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +63,7 @@ class _FeedItemState extends State<FeedItem> {
                 _favoriteToggled ? Icons.favorite : Icons.favorite_border,
                 color: Theme.of(context).accentColor,
               ),
-              onTap: () => setState(() => _favoriteToggled = !_favoriteToggled),
+              onTap: () => _toggleFavorite(),
             ),
             Text(timeago.format(widget.feed.publishedAt), style: TextStyle(color: Theme.of(context).textTheme.headline6.color)),
           ],
@@ -80,5 +87,13 @@ class _FeedItemState extends State<FeedItem> {
         },
       ),
     );
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _favoriteToggled = !_favoriteToggled;
+    });
+
+    IgdbService.toggleFavoriteFeed(widget.feed.id);
   }
 }

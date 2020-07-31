@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_explorer_flutter/screens/show_game_details/show_game_details.dart';
+import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class GameListItem extends StatefulWidget {
@@ -10,6 +11,7 @@ class GameListItem extends StatefulWidget {
   final List<String> platforms;
   final bool showFavoriteButton;
   final bool allowTap;
+  final bool favorite;
 
   GameListItem(
       {Key key,
@@ -18,6 +20,7 @@ class GameListItem extends StatefulWidget {
       @required this.coverUrl,
       @required this.genres,
       @required this.platforms,
+      this.favorite,
       this.showFavoriteButton = true,
       this.allowTap = true})
       : super(key: key);
@@ -27,7 +30,13 @@ class GameListItem extends StatefulWidget {
 }
 
 class _GameListItemState extends State<GameListItem> {
-  bool _favoriteToggled = false;
+  bool _favoriteToggled;
+
+  @override
+  void initState() {
+    super.initState();
+    _favoriteToggled = widget.favorite;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +111,7 @@ class _GameListItemState extends State<GameListItem> {
                     _favoriteToggled ? Icons.favorite : Icons.favorite_border,
                     color: Theme.of(context).accentColor,
                   ),
-                  onTap: () => setState(() => _favoriteToggled = !_favoriteToggled),
+                  onTap: () => _toggleFavorite(),
                 ),
             ],
           ),
@@ -124,5 +133,13 @@ class _GameListItemState extends State<GameListItem> {
         },
       ),
     );
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _favoriteToggled = !_favoriteToggled;
+    });
+
+    IgdbService.toggleFavoriteGame(widget.gameId);
   }
 }

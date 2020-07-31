@@ -25,4 +25,12 @@ class IgdbService {
 
     return feeds.map((feed) => Feed.fromJson(feed)).toList();
   }
+
+  static Future toggleFavoriteGame(int gameId) async {
+    return http.put("$baseUrl/games/favorites/$gameId");
+  }
+
+  static Future toggleFavoriteFeed(int feedId) async {
+    return http.put("$baseUrl/feeds/favorites/$feedId");
+  }
 }

@@ -74,7 +74,7 @@ class _ShowGameDetailsState extends State<ShowGameDetails> {
                             _favoriteToggled ? Icons.favorite : Icons.favorite_border,
                             color: Theme.of(context).accentColor,
                           ),
-                          onTap: () => setState(() => _favoriteToggled = !_favoriteToggled),
+                          onTap: () => _toggleFavorite(),
                         ),
                       ],
                     ),
@@ -158,6 +158,7 @@ class _ShowGameDetailsState extends State<ShowGameDetails> {
     IgdbService.fetchGameDetails(widget.gameId).then((gameDetails) {
       setState(() {
         _gameDetails = gameDetails;
+        _favoriteToggled = _gameDetails.favorite;
       });
     });
   }
@@ -194,5 +195,13 @@ class _ShowGameDetailsState extends State<ShowGameDetails> {
       return 'Great';
     }
     return 'Masterpiece';
+  }
+
+  void _toggleFavorite() {
+    setState(() {
+      _favoriteToggled = !_favoriteToggled;
+    });
+
+    IgdbService.toggleFavoriteGame(widget.gameId);
   }
 }

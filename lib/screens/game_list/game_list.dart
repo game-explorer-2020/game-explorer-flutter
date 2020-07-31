@@ -87,6 +87,7 @@ class _GameListState extends State<GameList> {
                             genres: _games[index].genres,
                             name: _games[index].name,
                             platforms: _games[index].platforms,
+                            favorite: _games[index].favorite,
                           ),
                         );
                       },
