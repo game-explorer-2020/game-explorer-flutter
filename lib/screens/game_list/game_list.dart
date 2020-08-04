@@ -5,7 +5,9 @@ import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:game_explorer_flutter/utils/debouncer.dart';
 
 class GameList extends StatefulWidget {
-  GameList({Key key}) : super(key: key);
+  final bool favoritesOnly;
+
+  GameList({Key key, this.favoritesOnly = false}) : super(key: key);
 
   @override
   _GameListState createState() => _GameListState();
@@ -114,7 +116,12 @@ class _GameListState extends State<GameList> {
     if (backToFirstPage) {
       _currentPage = 0;
     }
-    IgdbService.fetchGames(page: _currentPage, term: _searchTerm).then((games) {
+
+    var method = widget.favoritesOnly
+        ? IgdbService.fetchFavoriteGames(page: _currentPage, term: _searchTerm)
+        : IgdbService.fetchGames(page: _currentPage, term: _searchTerm);
+
+    method.then((games) {
       setState(() {
         if (_currentPage == 0) {
           _games.clear();

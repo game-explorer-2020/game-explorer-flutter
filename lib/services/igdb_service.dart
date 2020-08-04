@@ -19,8 +19,22 @@ class IgdbService {
     return GameDetails.fromJson(json.decode(response.body));
   }
 
-  static Future<List<Feed>> fetchFeeds(int page) async {
+  static Future<List<Game>> fetchFavoriteGames({int page = 0, String term = ''}) async {
+    final response = await http.get("$baseUrl/games/favorites?page=$page&term=$term");
+    final Iterable games = json.decode(response.body);
+
+    return games.map((game) => Game.fromJson(game)).toList();
+  }
+
+  static Future<List<Feed>> fetchFeeds({int page = 0}) async {
     final response = await http.get("$baseUrl/feeds?page=$page");
+    final Iterable feeds = json.decode(response.body);
+
+    return feeds.map((feed) => Feed.fromJson(feed)).toList();
+  }
+
+  static Future<List<Feed>> fetchFavoriteFeeds({int page = 0}) async {
+    final response = await http.get("$baseUrl/feeds/favorites?page=$page");
     final Iterable feeds = json.decode(response.body);
 
     return feeds.map((feed) => Feed.fromJson(feed)).toList();

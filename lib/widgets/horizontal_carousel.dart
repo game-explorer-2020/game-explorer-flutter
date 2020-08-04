@@ -48,16 +48,22 @@ class HorizontalCarousel extends StatelessWidget {
             ],
           ),
         ),
-        Container(
-          height: 120,
-          child: ListView(
-            scrollDirection: Axis.horizontal,
-            padding: EdgeInsets.all(5.0),
-            children: [
-              for (var card in cards) _ListItem(card: card),
-            ],
+        if (cards.isEmpty)
+          Padding(
+            child: Center(child: Text('No items to show.')),
+            padding: EdgeInsets.all(20),
           ),
-        ),
+        if (cards.isNotEmpty)
+          Container(
+            height: 120,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.all(5.0),
+              children: [
+                for (var card in cards) _ListItem(card: card),
+              ],
+            ),
+          ),
       ],
     );
   }

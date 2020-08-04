@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:game_explorer_flutter/models/feed.dart';
 import 'package:game_explorer_flutter/models/game.dart';
 import 'package:game_explorer_flutter/models/layout/carousel_card.dart';
+import 'package:game_explorer_flutter/screens/feeds/feed.dart';
 import 'package:game_explorer_flutter/screens/game_list/game_list.dart';
 import 'package:game_explorer_flutter/screens/show_game_details/show_game_details.dart';
 import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'package:game_explorer_flutter/widgets/horizontal_carousel.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class Explore extends StatefulWidget {
   Explore({Key key}) : super(key: key);
@@ -14,51 +17,69 @@ class Explore extends StatefulWidget {
 }
 
 class _ExploreState extends State<Explore> {
-  Future<List<Game>> futureGames;
+  List<Game> _popularGames;
+  List<Game> _favoriteGames;
+  List<Feed> _favoriteFeeds;
 
   @override
   void initState() {
     super.initState();
-    futureGames = IgdbService.fetchGames();
+    _updateData();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Game>>(
-      future: futureGames,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          List<Game> games = snapshot.data ?? [];
+    if (_popularGames == null || _favoriteGames == null || _favoriteFeeds == null) {
+      return Center(child: CircularProgressIndicator());
+    }
 
-          return HorizontalCarousel(
+    return RefreshIndicator(
+      child: ListView(
+        children: <Widget>[
+          HorizontalCarousel(
             title: 'Popular games',
-            cards: games
+            cards: _popularGames
                 .map(
                   (game) => CarouselCard(imageUrl: game.coverUrl, onTap: () => _pushGameDetails(context, game.id)),
                 )
                 .toList(),
-            onSeeAllClick: () => _pushPopularGameList(context),
-          );
-        }
-
-        if (snapshot.hasError) {
-          return Center(child: Text("Oops... There was an error."));
-        }
-
-        return Center(child: CircularProgressIndicator());
-      },
+            onSeeAllClick: () => _pushGameList(context, 'Popular games', false),
+          ),
+          HorizontalCarousel(
+            title: 'My favorite games',
+            cards: _favoriteGames
+                .map(
+                  (game) => CarouselCard(imageUrl: game.coverUrl, onTap: () => _pushGameDetails(context, game.id)),
+                )
+                .toList(),
+            onSeeAllClick: () => _pushGameList(context, 'My favorite games', true),
+          ),
+          HorizontalCarousel(
+            title: 'My favorite feeds',
+            cards: _favoriteFeeds
+                .map(
+                  (feed) => CarouselCard(imageUrl: feed.imageUrl, onTap: () => _pushArticleWebView(context, feed)),
+                )
+                .toList(),
+            onSeeAllClick: () => _pushFavoriteFeeds(context),
+          ),
+        ],
+      ),
+      onRefresh: _updateData,
     );
   }
 
-  void _pushPopularGameList(BuildContext context) {
+  void _pushGameList(BuildContext context, String title, bool favoritesOnly) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (BuildContext context) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Popular games'),
+              title: Text(title),
             ),
-            body: GameList(),
+            body: GameList(
+              favoritesOnly: favoritesOnly,
+            ),
           );
         },
       ),
@@ -78,5 +99,69 @@ class _ExploreState extends State<Explore> {
         },
       ),
     );
+  }
+
+  void _pushFavoriteFeeds(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('My favorite feeds'),
+            ),
+            body: Feeds(
+              favoritesOnly: true,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _pushArticleWebView(BuildContext context, Feed feed) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (BuildContext context) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text(feed.title),
+            ),
+            body: WebView(
+              initialUrl: feed.url,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Future<void> _updateData() async {
+    _fetchPopularGames();
+    _fetchFavoriteGames();
+    _fetchFavoriteFeeds();
+  }
+
+  void _fetchPopularGames() {
+    IgdbService.fetchGames().then((games) {
+      setState(() {
+        _popularGames = games;
+      });
+    });
+  }
+
+  void _fetchFavoriteGames() {
+    IgdbService.fetchFavoriteGames().then((games) {
+      setState(() {
+        _favoriteGames = games;
+      });
+    });
+  }
+
+  void _fetchFavoriteFeeds() {
+    IgdbService.fetchFavoriteFeeds().then((feeds) {
+      setState(() {
+        _favoriteFeeds = feeds;
+      });
+    });
   }
 }

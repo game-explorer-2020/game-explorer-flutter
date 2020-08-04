@@ -4,7 +4,9 @@ import 'package:game_explorer_flutter/services/igdb_service.dart';
 import 'local_widgets/feed_item.dart';
 
 class Feeds extends StatefulWidget {
-  Feeds({Key key}) : super(key: key);
+  final bool favoritesOnly;
+
+  Feeds({Key key, this.favoritesOnly = false}) : super(key: key);
 
   @override
   _FeedsState createState() => _FeedsState();
@@ -59,7 +61,9 @@ class _FeedsState extends State<Feeds> {
   }
 
   void _updateFeeds() {
-    IgdbService.fetchFeeds(_currentPage).then((response) {
+    var method = widget.favoritesOnly ? IgdbService.fetchFavoriteFeeds(page: _currentPage) : IgdbService.fetchFeeds(page: _currentPage);
+
+    method.then((response) {
       setState(() {
         _feeds.addAll(response);
       });
