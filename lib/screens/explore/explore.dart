@@ -16,10 +16,13 @@ class Explore extends StatefulWidget {
   _ExploreState createState() => _ExploreState();
 }
 
-class _ExploreState extends State<Explore> {
+class _ExploreState extends State<Explore> with AutomaticKeepAliveClientMixin<Explore> {
   List<Game> _popularGames;
   List<Game> _favoriteGames;
   List<Feed> _favoriteFeeds;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {

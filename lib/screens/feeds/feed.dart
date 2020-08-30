@@ -12,10 +12,13 @@ class Feeds extends StatefulWidget {
   _FeedsState createState() => _FeedsState();
 }
 
-class _FeedsState extends State<Feeds> {
+class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin<Feeds> {
   ScrollController _controller;
   List<Feed> _feeds = new List();
   int _currentPage = 0;
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
