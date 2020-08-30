@@ -31,6 +31,7 @@ class GameListItem extends StatefulWidget {
 
 class _GameListItemState extends State<GameListItem> {
   bool _favoriteToggled;
+  double _containerHeight = 130;
 
   @override
   void initState() {
@@ -40,83 +41,90 @@ class _GameListItemState extends State<GameListItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(
-          flex: 4,
-          child: GestureDetector(
-            child: Card(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              child: FadeInImage.memoryNetwork(
-                image: widget.coverUrl,
-                placeholder: kTransparentImage,
-                height: 130,
-                fit: BoxFit.fitHeight,
+    return Container(
+      height: _containerHeight,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            flex: 4,
+            child: GestureDetector(
+              child: Card(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                child: FadeInImage.memoryNetwork(
+                  image: widget.coverUrl,
+                  placeholder: kTransparentImage,
+                  height: _containerHeight,
+                  fit: BoxFit.fitHeight,
+                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                margin: EdgeInsets.only(right: 10),
               ),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              margin: EdgeInsets.only(right: 10),
+              onTap: widget.allowTap ? () => _pushGameDetails(context) : null,
             ),
-            onTap: widget.allowTap ? () => _pushGameDetails(context) : null,
           ),
-        ),
-        Expanded(
-          flex: 8,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              GestureDetector(
-                child: Text(
-                  widget.name,
-                  maxLines: 2,
-                  style: TextStyle(fontSize: 17),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                onTap: widget.allowTap ? () => _pushGameDetails(context) : null,
-              ),
-              SizedBox(height: 7),
-              RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  text: 'Genres: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
-                  children: [
-                    TextSpan(
-                      text: widget.genres.isEmpty ? 'None' : widget.genres.join(', '),
-                      style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 7),
-              RichText(
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-                text: TextSpan(
-                  text: 'Platforms: ',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
-                  children: [
-                    TextSpan(
-                      text: widget.genres.isEmpty ? 'None' : widget.platforms.join(', '),
-                      style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 7),
-              if (widget.showFavoriteButton)
+          Expanded(
+            flex: 8,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 GestureDetector(
-                  child: Icon(
-                    _favoriteToggled ? Icons.favorite : Icons.favorite_border,
-                    color: Theme.of(context).accentColor,
+                  child: Text(
+                    widget.name,
+                    maxLines: 2,
+                    style: TextStyle(fontSize: 17),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  onTap: () => _toggleFavorite(),
+                  onTap: widget.allowTap ? () => _pushGameDetails(context) : null,
                 ),
-            ],
-          ),
-        )
-      ],
+                SizedBox(height: 7),
+                RichText(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    text: 'Genres: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
+                    children: [
+                      TextSpan(
+                        text: widget.genres.isEmpty ? 'None' : widget.genres.join(', '),
+                        style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 7),
+                RichText(
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  text: TextSpan(
+                    text: 'Platforms: ',
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Theme.of(context).textTheme.headline6.color),
+                    children: [
+                      TextSpan(
+                        text: widget.genres.isEmpty ? 'None' : widget.platforms.join(', '),
+                        style: TextStyle(fontWeight: FontWeight.normal, color: Theme.of(context).accentColor),
+                      ),
+                    ],
+                  ),
+                ),
+                Spacer(),
+                if (widget.showFavoriteButton)
+                  Container(
+                    margin: EdgeInsets.only(bottom: 2),
+                    child: GestureDetector(
+                      child: Icon(
+                        _favoriteToggled ? Icons.favorite : Icons.favorite_border,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      onTap: () => _toggleFavorite(),
+                    ),
+                  ),
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 
