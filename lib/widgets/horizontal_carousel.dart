@@ -88,7 +88,6 @@ class _ListItem extends StatelessWidget {
           fit: BoxFit.cover,
         ),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-        elevation: 5,
         margin: EdgeInsets.symmetric(horizontal: 10),
       ),
     );
