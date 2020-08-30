@@ -16,6 +16,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin<Feeds>
   ScrollController _controller;
   List<Feed> _feeds = new List();
   int _currentPage = 0;
+  bool _isLoadingNextPage = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -43,7 +44,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin<Feeds>
                 controller: _controller,
                 itemBuilder: (context, index) {
                   if (index == _feeds.length) {
-                    return Center(child: Padding(padding: EdgeInsets.all(15.0), child: CircularProgressIndicator()));
+                    return _isLoadingNextPage ? Center(child: Padding(padding: EdgeInsets.all(15.0), child: CircularProgressIndicator())) : null;
                   }
                   return Container(
                     margin: EdgeInsets.all(20.0),
@@ -59,6 +60,9 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin<Feeds>
 
   void _scrollListener() {
     if (_controller.offset >= _controller.position.maxScrollExtent && !_controller.position.outOfRange) {
+      setState(() {
+        _isLoadingNextPage = true;
+      });
       this._updateFeeds();
     }
   }
@@ -69,6 +73,7 @@ class _FeedsState extends State<Feeds> with AutomaticKeepAliveClientMixin<Feeds>
     method.then((response) {
       setState(() {
         _feeds.addAll(response);
+        _isLoadingNextPage = false;
       });
       _currentPage++;
     });
