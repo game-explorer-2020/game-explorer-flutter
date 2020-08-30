@@ -63,7 +63,7 @@ class _ShowGameDetailsState extends State<ShowGameDetails> {
                         ),
                         SizedBox(height: 4),
                         Text(
-                          _gameDetails.involvedCompanies[0],
+                          _gameDetails.involvedCompanies.isNotEmpty ? _gameDetails.involvedCompanies[0] : "No companies involved",
                           style: TextStyle(color: Theme.of(context).textTheme.headline6.color),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
