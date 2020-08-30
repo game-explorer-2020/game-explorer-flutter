@@ -10,6 +10,7 @@ class Home extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
+            indicatorColor: Theme.of(context).accentColor,
             tabs: [
               Tab(text: 'FEED'),
               Tab(text: 'EXPLORE'),
