@@ -31,7 +31,7 @@ class GameListItem extends StatefulWidget {
 
 class _GameListItemState extends State<GameListItem> {
   bool _favoriteToggled;
-  double _containerHeight = 130;
+  final double _containerHeight = 125;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _GameListItemState extends State<GameListItem> {
                   image: widget.coverUrl,
                   placeholder: kTransparentImage,
                   height: _containerHeight,
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                 ),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
                 margin: EdgeInsets.only(right: 10),
@@ -117,7 +117,7 @@ class _GameListItemState extends State<GameListItem> {
                         _favoriteToggled ? Icons.favorite : Icons.favorite_border,
                         color: Theme.of(context).accentColor,
                       ),
-                      onTap: () => _toggleFavorite(),
+                      onTap: () => _toggleFavorite(context),
                     ),
                   ),
               ],
@@ -143,11 +143,11 @@ class _GameListItemState extends State<GameListItem> {
     );
   }
 
-  void _toggleFavorite() {
+  void _toggleFavorite(BuildContext context) {
     setState(() {
       _favoriteToggled = !_favoriteToggled;
     });
 
-    IgdbService.toggleFavoriteGame(widget.gameId);
+    IgdbService.toggleFavoriteGame(widget.gameId, _favoriteToggled, context);
   }
 }
